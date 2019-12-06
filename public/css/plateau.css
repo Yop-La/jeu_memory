@@ -1,3 +1,11 @@
+#progressbar{
+    width: 770px;
+}
+
+.ui-widget-header{
+    margin: 0px !important;
+}
+
 .card-cell{
     border: 5px black solid;
     width: 110px;
