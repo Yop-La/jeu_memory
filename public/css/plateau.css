@@ -1,0 +1,19 @@
+.card-cell{
+    border: 5px black solid;
+    width: 110px;
+    height: 110px;
+}
+
+.hide{
+    display: none;
+}
+
+.card-cell img{
+    
+    
+}
+
+.plateau{
+    /* table-layout: fixed ; */
+    /* width: 420px !important ; */
+}
