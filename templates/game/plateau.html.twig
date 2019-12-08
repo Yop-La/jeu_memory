@@ -18,11 +18,30 @@
 
 
 <div class="row launcher">
-    <div class="col-1"></div>
-    <div class="col-10" align='center'>
-        <button type="button" class="btn btn-success p-3 m-3  start-game"><div class="display-3"> Démarrer </div></button>
+    <div class="col-5"></div>
+    <div class="col-2" align='center'>
+        <h1>Best Players</h1>
+        <table class = 'table table-striped' id = 'best_players'>
+
+        {% for game in games %}
+            <tr>
+                <th>{{game.pseudo}}</th>
+                <th>{{game.score}}</th>
+            </tr>
+        {% endfor %}
+            
+        </table>
+
     </div>
 </div>
+
+<div class="row launcher">
+    
+    <div class="col" align='center'>
+        <button type="button" class="btn btn-success p-3 m-3 start-game"><div class="display-4"> Démarrer </div></button>
+    </div>
+</div>
+
 
 
 <div class="row game">
@@ -80,7 +99,7 @@
     <div class="row restart hide">
         <div class="col-1"></div>
         <div class="col-10" align='center'>
-            <button type="button" class="btn btn-light p-2 m-2"><a class="display-4" href="{{path('game')}}"> Menu </a></button>
+            <button type="button" class="btn btn-light p-2 m-2"><a class="display-5" href="{{path('plateau')}}"> Menu </a></button>
         </div>
     </div>
 

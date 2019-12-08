@@ -13,12 +13,18 @@ var gameStarted = false;
 var messageFinPartie = "Tu as perdu !";
 var pseudo = 'xxx';
 
+var gameTimeLimit = 120*1000;
+var gameTime = 0;
+
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
   
 
 $(document).ready(function(){
+
+
+   
   
     $(".start-game").click(function(){
 
@@ -27,7 +33,7 @@ $(document).ready(function(){
         $('#pseudo').text(pseudo);
 
         $('.game').removeClass('hide');
-        $('.start-game').addClass('hide');
+        $('.launcher').addClass('hide');
 
 
         gameStarted=true;
@@ -84,6 +90,15 @@ $(document).ready(function(){
                             $('.restart').removeClass('hide');
                             alert("Victoire !!");
                             victory=true;
+
+
+
+                            $.post( "game", {"pseudo":pseudo,"score":gameTime/1000})
+                            .done(function( data ) {
+                                console.log("ajax fait");
+                                console.log(data);
+                            });
+
                         }
                         console.log('Cartes trouvées: '. concat(cardsFound));
                         coupReussi=true;
@@ -112,8 +127,7 @@ $(document).ready(function(){
     /* partie sur la barre de proge du temps */
     var myVar = setInterval(timer, 1000);
 
-    var gameTimeLimit = 120*1000;
-    var gameTime = 0;
+
 
     function timer() {
 
