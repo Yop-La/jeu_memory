@@ -43,10 +43,11 @@ $(document).ready(function(){
 
     $(".card-cell").click(function(){
 
+        // plus possible de cliquer sur les cartes quand la partie est finie
         if(!victory && !gameOver){
 
-            // on peut pas cliquer sur un found
-            // on peut pas cliquer sur un candidat1        
+            
+            // si le coup n'est pas réussi et que la deuxième carte est joué
             if(!coupReussi && candidat2){
                 console.log('on cache les cartes, le coup n\'est pas réussi');  
                 $('#'.concat(candidat1)).find('.card').addClass('hide');
@@ -93,7 +94,7 @@ $(document).ready(function(){
 
 
 
-                            $.post( "game", {"pseudo":pseudo,"score":gameTime/1000})
+                            $.post( "game", {"pseudo":pseudo,"score":(gameTimeLimit-gameTime)/1000})
                             .done(function( data ) {
                                 console.log("ajax fait");
                                 console.log(data);

@@ -19,6 +19,33 @@ class GameRepository extends ServiceEntityRepository
         parent::__construct($registry, Game::class);
     }
 
+
+    // /**
+    //  * @return Game[] Returns an array of Game objects
+    //  */
+    
+    public function findTopTenBestPlayers()
+    {
+        return $this->createQueryBuilder('g')
+            ->orderBy('g.score', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+        
+    public function deleteAll()
+    {
+        return $this->createQueryBuilder('g')
+            ->delete()
+            ->getQuery()
+            ->execute();
+    }
+
+
+
+
     // /**
     //  * @return Game[] Returns an array of Game objects
     //  */
@@ -34,7 +61,6 @@ class GameRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Game

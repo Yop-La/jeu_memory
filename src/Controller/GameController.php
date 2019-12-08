@@ -6,6 +6,7 @@ use App\Entity\Game;
 use App\Repository\GameRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,7 +19,7 @@ class GameController extends AbstractController
     public function afficher_plateau(GameRepository $repo)
     {
         
-        $games = $repo->findAll();
+        $games = $repo->findTopTenBestPlayers();
 
         $imgs = array_diff(scandir("images/fruits"), array('..', '.'));
 
@@ -57,6 +58,19 @@ class GameController extends AbstractController
         return $this->render('game/test.html.twig');
     }
 
+    /**
+     * @Route("/games/delete", name="delete_games")
+     */
+    public function deleteGames(GameRepository $repo)
+    {
+
+        $repo->deleteAll();
+
+        return new Response(
+            '<html><body>Scores supprimés</body></html>'
+        );
+    
+    }
 
 
     /** 
