@@ -32,6 +32,11 @@ $(document).ready(function(){
 
         pseudo = window.prompt("Entre ton prénom pour rentrer dans l'histoire");
 
+        if (pseudo === null || pseudo == ""){
+            pseudo = 'xxx';
+        }
+
+
         $('#pseudo').text(pseudo);
 
         $('.game').removeClass('hide');
@@ -44,6 +49,11 @@ $(document).ready(function(){
 
 
     $(".card-cell").click(function(){
+
+
+        if($(this).hasClass("found")){
+            return;
+        }
 
         // mécanisme de verrou
         if(!lock){
@@ -61,6 +71,7 @@ $(document).ready(function(){
                     $('#'.concat(candidat2)).find('.card').addClass('hide');
                 }
 
+              
                 if(candidat2){
                     candidat1=false;
                     candidat2=false;
@@ -94,6 +105,10 @@ $(document).ready(function(){
                         if(fruit1 == fruit2 && candidat1 != candidat2){
                             console.log('Bravo, le coup est réussi !');
                             cardsFound=cardsFound+2;
+
+                            $('#'.concat(candidat1)).addClass('found');
+                            $('#'.concat(candidat2)).addClass('found');
+
                             if(cardsFound == 28){
                                 messageFinPartie = "Tu as gagné !";
                                 $('.restart').removeClass('hide');
