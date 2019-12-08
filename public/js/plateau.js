@@ -13,8 +13,10 @@ var gameStarted = false;
 var messageFinPartie = "Tu as perdu !";
 var pseudo = 'xxx';
 
-var gameTimeLimit = 120*1000;
+var gameTimeLimit = 100*1000;
 var gameTime = 0;
+
+var lock = false;
 
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -43,84 +45,95 @@ $(document).ready(function(){
 
     $(".card-cell").click(function(){
 
-        // plus possible de cliquer sur les cartes quand la partie est finie
-        if(!victory && !gameOver){
+        // mécanisme de verrou
+        if(!lock){
+            lock=true;
 
-            
-            // si le coup n'est pas réussi et que la deuxième carte est joué
-            if(!coupReussi && candidat2){
-                console.log('on cache les cartes, le coup n\'est pas réussi');  
-                $('#'.concat(candidat1)).find('.card').addClass('hide');
-                $('#'.concat(candidat2)).find('.card').addClass('hide');
-            }
+            // plus possible de cliquer sur les cartes quand la partie est finie
+            if(!victory && !gameOver)
+            {
 
-            if(candidat2){
-                candidat1=false;
-                candidat2=false;
-            }
-        
-
-            if(!candidat2){
                 
-                var candidat = $(this).attr('id');
-
-                if(candidat == candidat1){
-                    console.log("Tu as déjà joué cette carte !")
-                    return;
+                // si le coup n'est pas réussi et que la deuxième carte est joué
+                if(!coupReussi && candidat2){
+                    console.log('on cache les cartes, le coup n\'est pas réussi');  
+                    $('#'.concat(candidat1)).find('.card').addClass('hide');
+                    $('#'.concat(candidat2)).find('.card').addClass('hide');
                 }
 
-                $('#'.concat(candidat)).find('.card').removeClass('hide');
-
-                if(!candidat1){
-                    candidat1 = candidat;
+                if(candidat2){
+                    candidat1=false;
                     candidat2=false;
+                }
+            
+
+                if(!candidat2){
                     
-                }else{
+                    var candidat = $(this).attr('id');
 
-                    
-                    candidat2 = candidat;
-
-                    var fruit1 = candidat1.split("_")[0];
-                    var fruit2 = candidat2.split("_")[0];
-
-                    if(fruit1 == fruit2 && candidat1 != candidat2){
-                        console.log('Bravo, le coup est réussi !');
-                        cardsFound=cardsFound+2;
-                        if(cardsFound == 28){
-                            messageFinPartie = "Tu as gagné !";
-                            $('.restart').removeClass('hide');
-                            alert("Victoire !!");
-                            victory=true;
-
-
-
-                            $.post( "game", {"pseudo":pseudo,"score":(gameTimeLimit-gameTime)/1000})
-                            .done(function( data ) {
-                                console.log("ajax fait");
-                                console.log(data);
-                            })
-                            .fail(function(err){
-                                console.log("erreur ajax");
-                                console.log(err);
-                            });
-
-                        }
-                        console.log('Cartes trouvées: '. concat(cardsFound));
-                        coupReussi=true;
-
-                    }else{
-                        coupReussi=false;                    
+                    if(candidat == candidat1){
+                        console.log("Tu as déjà joué cette carte !");
+                        lock = false;
+                        return;
                     }
 
-                
+                    $('#'.concat(candidat)).find('.card').removeClass('hide');
 
+                    if(!candidat1){
+                        candidat1 = candidat;
+                        candidat2=false;
+                        
+                    }else{
+
+                        
+                        candidat2 = candidat;
+
+                        var fruit1 = candidat1.split("_")[0];
+                        var fruit2 = candidat2.split("_")[0];
+
+                        if(fruit1 == fruit2 && candidat1 != candidat2){
+                            console.log('Bravo, le coup est réussi !');
+                            cardsFound=cardsFound+2;
+                            if(cardsFound == 28){
+                                messageFinPartie = "Tu as gagné !";
+                                $('.restart').removeClass('hide');
+                                alert("Victoire !!");
+                                victory=true;
+
+
+
+                                $.post( "game", {"pseudo":pseudo,"score":(gameTimeLimit-gameTime)/1000})
+                                .done(function( data ) {
+                                    console.log("ajax fait");
+                                    console.log(data);
+                                })
+                                .fail(function(err){
+                                    console.log("erreur ajax");
+                                    console.log(err);
+                                });
+
+                            }
+                            console.log('Cartes trouvées: '. concat(cardsFound));
+                            coupReussi=true;
+
+                        }else{
+                            coupReussi=false;                    
+                        }
+
+                    
+
+                    }
                 }
+            }else
+            
+            {
+
+                alert('La partie est terminée !'.concat(' ',messageFinPartie));
+
             }
-    }else{
 
-        alert('La partie est terminée !'.concat(' ',messageFinPartie));
-
-    }
+            lock = false;
+        }
 
     });
 
