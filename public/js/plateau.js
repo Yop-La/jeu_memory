@@ -97,6 +97,10 @@ $(document).ready(function(){
                             .done(function( data ) {
                                 console.log("ajax fait");
                                 console.log(data);
+                            })
+                            .fail(function(err){
+                                console.log("erreur ajax");
+                                console.log(err);
                             });
 
                         }

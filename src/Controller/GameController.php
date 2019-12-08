@@ -49,7 +49,7 @@ class GameController extends AbstractController
 
 
 
-       /**
+    /**
      * @Route("/test", name="test")
      */
     public function test()
@@ -59,40 +59,40 @@ class GameController extends AbstractController
 
 
 
-/** 
-* @Route("/game",name="game") 
-*/ 
-public function game(Request $request) {  
-       
-    $manager = $this->getDoctrine()->getManager();
+    /** 
+    * @Route("/game",name="game") 
+    */ 
+    public function game(Request $request) {  
+        
+        $manager = $this->getDoctrine()->getManager();
 
-    $method = $request->getMethod();
+        $method = $request->getMethod();
 
-    if($method != 'POST'){
-        $jsonData['msg'] = 'Bad request. Only post request is accepted';
-    }
+        if($method != 'POST'){
+            $jsonData['msg'] = 'Bad request. Only post request is accepted';
+        }
 
-    
+        
 
-    $body = $request->getContent();
-    $body = json_decode($body);
+        $body = $request->getContent();
+        $body = json_decode($body);
 
-    
-    $game = new Game();
-    $game->setPseudo($request->request->get('pseudo'))
-          ->setScore($request->request->get('score'));        
-    $manager->persist($game);
-    $manager->flush();
+        
+        $game = new Game();
+        $game->setPseudo($request->request->get('pseudo'))
+            ->setScore($request->request->get('score'));        
+        $manager->persist($game);
+        $manager->flush();
 
-    $jsonData = array();
-    $jsonData['msg'] = $method;
-    $jsonData['body'] = $body;
-    $jsonData['statut'] = 'ok';
-    $jsonData['type'] = gettype($body);
+        $jsonData = array();
+        $jsonData['msg'] = $method;
+        $jsonData['body'] = $body;
+        $jsonData['statut'] = 'ok';
+        $jsonData['type'] = gettype($body);
 
-    return new JsonResponse($jsonData); 
-     
- }  
+        return new JsonResponse($jsonData); 
+        
+    }  
 
 
 
