@@ -2,8 +2,8 @@ console.log('debut');
 
 var cardsFound = 0;
 
-var candidat1=false;
-var candidat2=false;
+var candidat1=false; // 1ere carte retourné
+var candidat2=false; // 2eme carte retourné
 
 var coupReussi = true;
 var victory = false;
@@ -18,16 +18,9 @@ var gameTime = 0;
 
 var lock = false;
 
-const sleep = (milliseconds) => {
-    return new Promise(resolve => setTimeout(resolve, milliseconds))
-}
-  
-
 $(document).ready(function(){
 
 
-   
-  
     $(".start-game").click(function(){
 
         pseudo = window.prompt("Entre ton prénom pour rentrer dans l'histoire");
@@ -63,15 +56,15 @@ $(document).ready(function(){
             if(!victory && !gameOver)
             {
 
-                
-                // si le coup n'est pas réussi et que la deuxième carte est joué
+                // on cache les cartes après un coup pas réussi
                 if(!coupReussi && candidat2){
                     console.log('on cache les cartes, le coup n\'est pas réussi');  
                     $('#'.concat(candidat1)).find('.card').addClass('hide');
                     $('#'.concat(candidat2)).find('.card').addClass('hide');
                 }
 
-              
+                
+                
                 if(candidat2){
                     candidat1=false;
                     candidat2=false;

@@ -48,16 +48,6 @@ class GameController extends AbstractController
         ]);
     }
 
-
-
-    /**
-     * @Route("/test", name="test")
-     */
-    public function test()
-    {
-        return $this->render('game/test.html.twig');
-    }
-
     /**
      * @Route("/games/delete", name="delete_games")
      */
