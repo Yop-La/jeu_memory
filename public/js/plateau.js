@@ -63,8 +63,6 @@ $(document).ready(function(){
                     $('#'.concat(candidat2)).find('.card').addClass('hide');
                 }
 
-                
-                
                 if(candidat2){
                     candidat1=false;
                     candidat2=false;
